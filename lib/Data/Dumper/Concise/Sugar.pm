@@ -58,6 +58,17 @@ is equivalent to:
   warn Dumper($return);
   return $return;
 
+Sometimes you'll want to C<Dwarn> out part of a result, instead of the entire
+thing; for that we have C<Dwarn_only>:
+
+  # Dwarn the TO_JSON of all the objects in the list
+  my @results = Dwarn_only { map $_->TO_JSON, @_ } some_call(...);
+
+and C<DwarnS_only>:
+
+  # only Dwarn the first item
+  my $data = Dwarn_only { $_->[0] } [ some_call(...) ];
+
 Another trick that is extremely useful when doing method chaining is the
 following:
 
@@ -80,9 +91,25 @@ its docs for ways to make it do something else.
 
   sub Dwarn { warn Data::Dumper::Concise::Dumper @_; @_ }
 
-=head3 DwarnS
+=head2 DwarnS
 
   sub DwarnS ($) { warn Data::Dumper::Concise::Dumper $_[0]; $_[0] }
+
+=head2 Dwarn_only
+
+  sub Dwarn_only (&@) {
+    my $only = shift;
+    warn Data::Dumper::Concise::Dumper $only->(@_);
+    @_
+  }
+
+=head2 DwarnS_only
+
+  sub DwarnS_only (&$) {
+    my $only = shift;
+    warn Data::Dumper::Concise::Dumper do { local $_ = $_[0]; $only->($_[0]) };
+    $_[0]
+  }
 
 =head1 SEE ALSO
 

@@ -38,6 +38,17 @@ is equivalent to:
   warn Dumper($return);
   return $return;
 
+Sometimes you'll want to C<Dwarn> out part of a result, instead of the entire
+thing; for that we have C<Dwarn_only>:
+
+  # Dwarn the TO_JSON of all the objects in the list
+  my @results = Dwarn_only { map $_->TO_JSON, @_ } some_call(...);
+
+and C<DwarnS_only>:
+
+  # only Dwarn the first item
+  my $data = Dwarn_only { $_->[0] } [ some_call(...) ];
+
 Another trick that is extremely useful when doing method chaining is the
 following:
 
