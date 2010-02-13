@@ -9,9 +9,23 @@ BEGIN { @ISA = qw(Exporter) }
 
 @EXPORT = qw(Dwarn DwarnS);
 
+@EXPORT_OK = qw(Dwarn_only DwarnS_only);
+
 sub Dwarn { warn Data::Dumper::Concise::Dumper @_; @_ }
 
 sub DwarnS ($) { warn Data::Dumper::Concise::Dumper $_[0]; $_[0] }
+
+sub Dwarn_only (&@) {
+  my $only = shift;
+  warn Data::Dumper::Concise::Dumper $only->(@_);
+  @_
+}
+
+sub DwarnS_only (&$) {
+  my $only = shift;
+  warn Data::Dumper::Concise::Dumper do { local $_ = $_[0]; $only->($_[0]) };
+  $_[0]
+}
 
 =head1 NAME
 
