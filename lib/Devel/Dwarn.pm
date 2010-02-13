@@ -47,7 +47,7 @@ thing; for that we have C<Dwarn_only>:
 and C<DwarnS_only>:
 
   # only Dwarn the first item
-  my $data = Dwarn_only { $_->[0] } [ some_call(...) ];
+  my $data = DwarnS_only { $_->[0] } [ some_call(...) ];
 
 Another trick that is extremely useful when doing method chaining is the
 following:
