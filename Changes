@@ -1,3 +1,6 @@
+  - add Dwarn_only { ... } (...) and DwarnS_only { ... } $foo to
+    allow filtering of the data before Dumper-ing it
+
 1.200 Feb 13 2010
   - make sure Devel::Dwarn::Dwarn and Devel::Dwarn::DwarnS work
 

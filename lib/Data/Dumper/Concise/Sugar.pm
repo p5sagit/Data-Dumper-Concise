@@ -7,9 +7,8 @@ use Data::Dumper::Concise ();
 
 BEGIN { @ISA = qw(Exporter) }
 
-@EXPORT = qw(Dwarn DwarnS);
+@EXPORT = qw(Dwarn DwarnS Dwarn_only DwarnS_only);
 
-@EXPORT_OK = qw(Dwarn_only DwarnS_only);
 
 sub Dwarn { warn Data::Dumper::Concise::Dumper @_; @_ }
 
