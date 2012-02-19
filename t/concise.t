@@ -3,6 +3,7 @@ use warnings;
 use Data::Dumper ();
 use Data::Dumper::Concise;
 use Test::More qw(no_plan);
+use Scalar::Util 'weaken';
 
 my $dd = Data::Dumper->new([])
                      ->Terse(1)
@@ -35,5 +36,9 @@ foreach my $to_dump (
 }
 
 my $out = DumperF { "arr: $_[0] str: $_[1]" } [qw(wut HALP)], "gnarl";
-
+my $x = [1, 2];
+my $z = $x;
+my $y = weaken($x);
+warn Dumper($y);
+warn Dumper($x);
 is($out, qq{arr: [\n  "wut",\n  "HALP"\n]\n str: "gnarl"\n}, 'DumperF works!');

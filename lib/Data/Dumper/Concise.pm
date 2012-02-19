@@ -6,6 +6,7 @@ $VERSION = '2.020';
 
 require Exporter;
 require Data::Dumper;
+use Scalar::Util 'isweak';
 
 BEGIN { @ISA = qw(Exporter) }
 
@@ -16,7 +17,15 @@ sub DumperObject {
   $dd->Terse(1)->Indent(1)->Useqq(1)->Deparse(1)->Quotekeys(0)->Sortkeys(1);
 }
 
-sub Dumper { DumperObject->Values([ @_ ])->Dump }
+sub Dumper {
+   my $o = Data::Dumper->can('_dump');
+   local *Data::Dumper::_dump = sub {
+      isweak($_[1])
+         ? 'do { WEAK: ' . $o->(@_) . ' }'
+         : $o->(@_)
+   };
+   DumperObject->Values([ @_ ])->Dump
+}
 
 sub DumperF (&@) {
   my $code = shift;
