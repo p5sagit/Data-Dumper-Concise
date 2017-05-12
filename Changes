@@ -1,6 +1,7 @@
 Revision history for Data-Dumper-Concise
 
   - convert distribution from Module::Install to Distar; fixes RT#120856
+  - every module has a $VERSION now (RT#116427)
 
 2.022 Mar 21 2014
   - Fix repo metadata
